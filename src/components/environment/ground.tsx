@@ -16,7 +16,7 @@ export function Ground() {
 
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1, 0]}>
-      <planeGeometry args={[100, 100, 128, 128]} />
+      <planeGeometry args={[100, 100, 64, 64]} />
       <meshStandardMaterial
         map={diffuseMap}
         normalMap={normalMap}

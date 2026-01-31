@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Ground } from "../components/environment/ground";
 import { Player } from "../components/player/player";
 import Aurora from "@/components/ui/aurora";
-
+import { Snowfall } from "react-snowfall";
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
@@ -27,18 +27,14 @@ function RouteComponent() {
         className="absolute inset-0"
       >
         <div className="w-screen h-screen bg-gray-400 relative">
-          <Snow />;
           {!gameStarted && (
             <div className="absolute inset-0 z-30">
               <Overlay onStart={() => setGameStarted(true)} />
             </div>
           )}
-          <Canvas
-            className="w-screen h-screen"
-            camera={{ position: [0, 3, 5], fov: 60 }}
-          >
+          {gameStarted && <Snowfall></Snowfall>}
+          <Canvas className="w-screen h-screen">
             <ambientLight intensity={0.3} />
-            <directionalLight position={[10, 10, 5]} intensity={0.5} />
             <fog attach="fog" args={["#666666", 10, 30]} />
             <Ground />
             {gameStarted && <Player />}

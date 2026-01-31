@@ -13,22 +13,17 @@ export function Player() {
 
   const velocity = useRef(new THREE.Vector3());
   const direction = useRef(new THREE.Vector3());
-
-  // Movement parameters
   const MOVE_SPEED = 3;
   const ROTATION_SPEED = 3;
 
-  // Play walking animation when moving
   useEffect(() => {
     const isMoving =
       controls.forward || controls.backward || controls.left || controls.right;
 
     if (isMoving && actions && Object.keys(actions).length > 0) {
-      // Play the first animation (usually walk/run)
       const firstAnimation = Object.values(actions)[0];
       firstAnimation?.play();
     } else if (actions && Object.keys(actions).length > 0) {
-      // Stop animation when not moving
       const firstAnimation = Object.values(actions)[0];
       firstAnimation?.stop();
     }
@@ -36,8 +31,6 @@ export function Player() {
 
   useFrame((_, delta) => {
     if (!group.current) return;
-
-    // Reset direction
     direction.current.set(0, 0, 0);
 
     // Calculate movement direction
@@ -45,13 +38,9 @@ export function Player() {
     if (controls.backward) direction.current.z += 1;
     if (controls.left) direction.current.x -= 1;
     if (controls.right) direction.current.x += 1;
-
-    // Normalize diagonal movement
     if (direction.current.length() > 0) {
       direction.current.normalize();
     }
-
-    // Apply movement
     velocity.current.set(
       direction.current.x * MOVE_SPEED * delta,
       0,
@@ -60,7 +49,6 @@ export function Player() {
 
     group.current.position.add(velocity.current);
 
-    // Rotate character to face movement direction
     if (direction.current.length() > 0) {
       const targetRotation = Math.atan2(
         direction.current.x,
@@ -74,12 +62,10 @@ export function Player() {
     }
 
     // Camera follow
-    const cameraOffset = new THREE.Vector3(0, 3, 5);
+    const cameraOffset = new THREE.Vector3(0, 1.5, 5);
     const targetPosition = group.current.position.clone().add(cameraOffset);
     camera.position.lerp(targetPosition, 5 * delta);
     camera.lookAt(group.current.position);
-
-    // Keep player within bounds
     const BOUNDARY = 45;
     group.current.position.x = Math.max(
       -BOUNDARY,
@@ -97,6 +83,5 @@ export function Player() {
     </group>
   );
 }
-
 // Preload the model
 useGLTF.preload("/character_walk.glb");
