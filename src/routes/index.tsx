@@ -8,6 +8,8 @@ import { Ground } from "../components/environment/ground";
 import { Player } from "../components/player/player";
 import Aurora from "@/components/ui/aurora";
 import { Snowfall } from "react-snowfall";
+import { Stars, Sparkles, Cloud } from "@react-three/drei";
+import { Forest } from "@/components/environment/trees/forest";
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
@@ -19,14 +21,14 @@ function RouteComponent() {
   return (
     <>
       <Aurora
-        speed={1.0}
-        intensity={1.0}
+        speed={0.2}
+        intensity={0.7}
         vibrancy={1.0}
         frequency={1.0}
         stretch={1.0}
         className="absolute inset-0"
       >
-        <div className="w-screen h-screen bg-gray-400 relative">
+        <div className="w-screen h-screen relative">
           {!gameStarted && (
             <div className="absolute inset-0 z-30">
               <Overlay onStart={() => setGameStarted(true)} />
@@ -34,8 +36,18 @@ function RouteComponent() {
           )}
           {gameStarted && <Snowfall></Snowfall>}
           <Canvas className="w-screen h-screen">
-            <ambientLight intensity={0.3} />
-            <fog attach="fog" args={["#666666", 10, 30]} />
+            <Stars
+              radius={100}
+              depth={50}
+              count={5000}
+              factor={4}
+              saturation={0}
+              fade
+              speed={1}
+            />
+            <ambientLight intensity={2} />
+            <fog attach="fog" args={["#666666", 5, 10]} />
+            <Forest count={25} spread={40} />
             <Ground />
             {gameStarted && <Player />}
           </Canvas>
