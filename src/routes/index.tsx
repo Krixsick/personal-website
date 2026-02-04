@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Canvas } from "@react-three/fiber";
 import { Overlay } from "../components/fun_mode/start-screen/overlay";
 import { Volume2, VolumeX } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Ground } from "../components/fun_mode/environment/ground";
 import { Player } from "../components/fun_mode/player/player";
 import Aurora from "@/components/ui/aurora";
@@ -10,8 +10,9 @@ import { Snowfall } from "react-snowfall";
 import { Stars } from "@react-three/drei";
 import { Forest } from "@/components/fun_mode/environment/trees/forest";
 import FaultyTerminal from "@/components/FaultyTerminal";
-import { Text3D, Center } from "@react-three/drei";
-import libreFont from "../assets/Libre_Baskerville_Italic.json";
+import ASCIIText from "@/components/ASCIIText";
+import PixelTrail from "@/components/PixelTrail";
+
 // import {
 //   ProjectList,
 //   exampleProjects,
@@ -26,6 +27,20 @@ function RouteComponent() {
   const [gameStarted, setGameStarted] = useState(false);
   //Different screen options
   const [funScreenMode, setFunScreenMode] = useState(false);
+
+  // const [height, setHeight] = useState(false);
+  // useEffect(() => {
+  //   const onScroll = () => {
+  //     const shouldBeScrolled = window.scrollY > 80;
+  //     if (shouldBeScrolled !== height) {
+  //       setHeight(!height);
+  //     }
+  //   };
+  //   window.addEventListener("scroll", onScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", onScroll);
+  //   };
+  // }, []);
 
   return (
     <>
@@ -81,67 +96,70 @@ function RouteComponent() {
           </div>
         </Aurora>
       ) : (
-        <div className="w-screen h-screen relative">
-          <FaultyTerminal
-            scale={1.5}
-            gridMul={[2, 1]}
-            digitSize={1.2}
-            timeScale={0.8}
-            pause={false}
-            scanlineIntensity={0.5}
-            glitchAmount={1}
-            flickerAmount={1}
-            noiseAmp={1}
-            chromaticAberration={0}
-            dither={0}
-            curvature={0.1}
-            tint="#A7EF9E"
-            mouseReact
-            mouseStrength={0.5}
-            pageLoadAnimation
-            brightness={0.6}
-          />
-          <div className="bg-black/60 border-b border-white absolute top-1 left-1/2 -translate-x-1/2 w-[50%] rounded-full flex justify-center items-center">
-            <p className="text-2xl text-white text-serif">Home</p>
+        <div className="relative min-h-screen">
+          <div className="fixed inset-0 z-0">
+            <FaultyTerminal
+              scale={1.5}
+              gridMul={[2, 1]}
+              digitSize={1.2}
+              timeScale={0.8}
+              pause={false}
+              scanlineIntensity={0.5}
+              glitchAmount={1}
+              flickerAmount={1}
+              noiseAmp={1}
+              chromaticAberration={0}
+              dither={0}
+              curvature={0.1}
+              tint="#A7EF9E"
+              mouseReact
+              mouseStrength={0.5}
+              pageLoadAnimation
+              brightness={0.6}
+            />
+            <PixelTrail
+              className="z-1"
+              gridSize={50}
+              trailSize={0.1}
+              maxAge={250}
+              interpolate={5}
+              color="#5227FF"
+              gooeyFilter={{ id: "custom-goo-filter", strength: 2 }}
+              gooeyEnabled
+              gooStrength={2}
+            />
           </div>
-          <div className="top-40 absolute left-1/2 -translate-x-1/2 w-full h-full">
-            <Canvas camera={{ position: [0, 0, 5] }}>
-              <ambientLight intensity={1}></ambientLight>
-              <directionalLight
-                position={[1, 1, 1]}
-                intensity={2}
-              ></directionalLight>
-              <Center>
-                <Text3D
-                  font={libreFont}
-                  size={1}
-                  height={0.5}
-                  curveSegments={12}
-                  bevelEnabled
-                  bevelThickness={0.02}
-                  bevelSize={0.01}
-                >
-                  LINUS GAO
-                  <meshStandardMaterial
-                    color="white"
-                    metalness={0.5}
-                    roughness={0.3}
-                  />
-                </Text3D>
-              </Center>
-            </Canvas>
-          </div>
-          <div className="w-screen h-screen bg-red-100 relative">
-            <button
-              className="btn cursor-pointer"
-              onClick={() => {
-                setFunScreenMode(!funScreenMode);
-              }}
+          <section className="relative h-screen w-screen z-10">
+            <nav
+              className={`h-[60px] w-[40%] z-10 fixed top-6 left-1/2 -translate-x-1/2 px-8 py-4 rounded-full bg-black/30 backdrop-blur-xl border border-white/10 shadow-2xl flex justify-center items-center`}
             >
-              secret_button
-            </button>
-          </div>
+              <p className="text-[clamp(14px,2vw,28px)] text-white font-bold inter-nor">
+                Home
+              </p>
+            </nav>
+            {/* */}
+            <div className="w-screen h-full flex justify-center items-center">
+              <ASCIIText text="LINUS GAO" enableWaves asciiFontSize={4} />
+            </div>
+          </section>
+          {/* Section 2 */}
+          <section className="min-h-screen flex items-center justify-center flex-col">
+            <div className="flex w-[50%] h-[50px] justify-center items-center bg-blue-100">
+              <p>Projects</p>
+            </div>
+            <div className="w-screen h-screen bg-red-100 z-1">w</div>
+          </section>
         </div>
+
+        // <div className="w-screen h-screen relative">
+        //   <div className="bg-black/60 border-b border-white absolute top-1 left-1/2 -translate-x-1/2 w-[50%] rounded-full flex justify-center items-center">
+        //     <p className="text-2xl text-white text-serif">Home</p>
+        //   </div>
+        //   <div className="top-40 absolute left-1/2 -translate-x-1/2 w-full h-full"></div>
+        //   <div className="w-screen h-screen bg-red-100 relative">
+
+        //   </div>
+        // </div>
       )}
     </>
   );
