@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Canvas } from "@react-three/fiber";
 import { Overlay } from "../components/fun_mode/start-screen/overlay";
 import { Volume2, VolumeX } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Ground } from "../components/fun_mode/environment/ground";
 import { Player } from "../components/fun_mode/player/player";
 import Aurora from "@/components/ui/aurora";
@@ -11,7 +11,7 @@ import { Stars } from "@react-three/drei";
 import { Forest } from "@/components/fun_mode/environment/trees/forest";
 import FaultyTerminal from "@/components/FaultyTerminal";
 import ASCIIText from "@/components/ASCIIText";
-import PixelTrail from "@/components/PixelTrail";
+import { Experience } from "@/components/recruiter_mode/experience";
 import { Projects } from "@/components/recruiter_mode/projects";
 // import {
 //   ProjectList,
@@ -27,7 +27,16 @@ function RouteComponent() {
   const [gameStarted, setGameStarted] = useState(false);
   //Different screen options
   const [funScreenMode, setFunScreenMode] = useState(false);
-
+  const [heroVisible, setHeroVisible] = useState(true);
+  const heroRef = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    if (heroRef.current) observer.observe(heroRef.current);
+    return () => observer.disconnect();
+  }, []);
   // const [height, setHeight] = useState(false);
   // useEffect(() => {
   //   const onScroll = () => {
@@ -102,31 +111,20 @@ function RouteComponent() {
               scale={1.5}
               gridMul={[2, 1]}
               digitSize={1.2}
-              timeScale={0.8}
+              timeScale={0.6}
               pause={false}
-              scanlineIntensity={0.5}
-              glitchAmount={1}
-              flickerAmount={1}
-              noiseAmp={1}
+              scanlineIntensity={0.4}
+              glitchAmount={0.7}
+              flickerAmount={0.7}
+              noiseAmp={0.7}
               chromaticAberration={0}
               dither={0}
               curvature={0.1}
               tint="#A7EF9E"
-              mouseReact
+              mouseReact={false}
               mouseStrength={0.5}
-              pageLoadAnimation
+              pageLoadAnimation={false}
               brightness={0.6}
-            />
-            <PixelTrail
-              className="z-1"
-              gridSize={50}
-              trailSize={0.1}
-              maxAge={250}
-              interpolate={5}
-              color="#5227FF"
-              gooeyFilter={{ id: "custom-goo-filter", strength: 2 }}
-              gooeyEnabled
-              gooStrength={2}
             />
           </div>
           <section className="relative h-screen w-screen z-10">
@@ -139,7 +137,14 @@ function RouteComponent() {
             </nav>
             {/* */}
             <div className="w-screen h-full flex justify-center items-center">
-              <ASCIIText text="LINUS GAO" enableWaves asciiFontSize={4} />
+              {heroVisible && (
+                <ASCIIText
+                  text="LINUS GAO"
+                  enableWaves={false}
+                  textFontSize={55}
+                  asciiFontSize={4}
+                />
+              )}
             </div>
           </section>
           {/* Section 2 */}
@@ -148,6 +153,10 @@ function RouteComponent() {
               <p>Projects</p>
             </div>
             <Projects></Projects>
+          </section>
+          {/* Experience Section 3*/}
+          <section className="w-full min-h-screen relative z-10">
+            <Experience />
             <div className="flex justify-center items-center">
               <button
                 className="px-6 py-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full text-white text-sm hover:bg-black/60 transition-colors inter-nor cursor-pointer"

@@ -3,6 +3,7 @@ import PixelTransition from "../PixelTransition";
 import protoGif from "@/assets/vid1.gif";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import SplitText from "../SplitText";
 export function Projects() {
   interface Project {
     id: number;
@@ -16,7 +17,7 @@ export function Projects() {
     {
       id: 1,
       title: "Protogame",
-      description: "UOFT Hacks #6 Overall Create your own personalized story",
+      description: "UOFTHacks 13 Project",
       tags: ["MongoDB", "NextJS", "JavaScript/TypeScript", "HTML", "CSS", ""],
       link: "https://protagame.vercel.app/",
       gif: protoGif,
@@ -24,7 +25,7 @@ export function Projects() {
     {
       id: 2,
       title: "Idlemind",
-      description: "Western Hacks 13 Project",
+      description: "hackWestern 12 Project",
       tags: [
         "MongoDB",
         "ReactJS",
@@ -38,7 +39,7 @@ export function Projects() {
     {
       id: 3,
       title: "Polar Bot",
-      description: "Discord Bot for Wynncraft",
+      description: "Territory Discord Bot",
       tags: ["Python", "FastAPI", "Discord.py"],
       link: "https://github.com/Krixsick/discord-1",
     },
@@ -76,8 +77,28 @@ export function Projects() {
     { scope: containerRef },
   );
 
+  const handleAnimationComplete = () => {
+    console.log("All letters have animated!");
+  };
+
   return (
     <>
+      <div className="w-full flex justify-center">
+        <SplitText
+          text="Projects"
+          className="text-2xl lg:text-5xl inter-bold text-white"
+          delay={50}
+          duration={1.25}
+          ease="power3.out"
+          splitType="chars"
+          from={{ opacity: 0, y: 40 }}
+          to={{ opacity: 1, y: 0 }}
+          threshold={0.1}
+          rootMargin="-100px"
+          textAlign="center"
+          onLetterAnimationComplete={handleAnimationComplete}
+        />
+      </div>
       <div
         ref={containerRef}
         className="w-screen min-h-screen grid grid-cols-1 z-1 md:grid-cols-2 auto-rows-[50vh] gap-8 p-6 max-w-7xl"
@@ -123,7 +144,7 @@ export function Projects() {
                         href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="px-6 py-2 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform"
+                        className="px-6 py-2 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform cursor-pointer"
                       >
                         View Project
                       </a>
