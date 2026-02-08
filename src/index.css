@@ -4,11 +4,6 @@
 @custom-variant dark (&:is(.dark *));
 @plugin "daisyui";
 
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .inter-bold {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;

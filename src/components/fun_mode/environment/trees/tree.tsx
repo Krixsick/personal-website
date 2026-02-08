@@ -17,9 +17,12 @@ export function Tree({
   const clonedScene = useMemo(() => scene.clone(), [scene]);
 
   return (
-    <group position={position} scale={scale} rotation={[0, rotation, 0]}>
-      <primitive object={clonedScene} />
-    </group>
+    <primitive
+      object={clonedScene}
+      position={position}
+      scale={scale}
+      rotation={[0, rotation, 0]}
+    />
   );
 }
 

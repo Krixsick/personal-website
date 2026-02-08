@@ -12,7 +12,7 @@ import { Forest } from "@/components/fun_mode/environment/trees/forest";
 import FaultyTerminal from "@/components/FaultyTerminal";
 import ASCIIText from "@/components/ASCIIText";
 import PixelTrail from "@/components/PixelTrail";
-
+import { Projects } from "@/components/recruiter_mode/projects";
 // import {
 //   ProjectList,
 //   exampleProjects,
@@ -147,7 +147,15 @@ function RouteComponent() {
             <div className="flex w-[50%] h-[50px] justify-center items-center bg-blue-100">
               <p>Projects</p>
             </div>
-            <div className="w-screen h-screen bg-red-100 z-1">w</div>
+            <Projects></Projects>
+            <div className="flex justify-center items-center">
+              <button
+                className="px-6 py-3 bg-black/40 backdrop-blur-sm border border-white/10 rounded-full text-white text-sm hover:bg-black/60 transition-colors inter-nor cursor-pointer"
+                onClick={() => setFunScreenMode(!funScreenMode)}
+              >
+                SECERT
+              </button>
+            </div>
           </section>
         </div>
 
