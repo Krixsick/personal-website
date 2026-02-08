@@ -13,6 +13,8 @@ import FaultyTerminal from "@/components/FaultyTerminal";
 import ASCIIText from "@/components/ASCIIText";
 import { Experience } from "@/components/recruiter_mode/experience";
 import { Projects } from "@/components/recruiter_mode/projects";
+import { Suspense } from "react";
+import { HomeLoadingScreen } from "@/components/recruiter_mode/homeLoadingScreen";
 // import {
 //   ProjectList,
 //   exampleProjects,
@@ -53,6 +55,7 @@ function RouteComponent() {
 
   return (
     <>
+      <HomeLoadingScreen></HomeLoadingScreen>
       {funScreenMode ? (
         <Aurora
           speed={0.2}
