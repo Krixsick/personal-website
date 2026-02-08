@@ -1,6 +1,6 @@
 import TiltedCard from "../TiltedCard";
 import fluxlogo from "@/assets/flux.jpeg";
-import rbclogo from "@/assets/rbc.jpeg";
+import rbclogo from "@/assets/rbc.jpg";
 import SplitText from "../SplitText";
 import gsap from "gsap";
 import { useRef } from "react";
@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 interface Work {
   id: number;
   title: string;
-  role: string; // Added role for more detail
+  role: string;
   pic?: string;
   link: string;
 }

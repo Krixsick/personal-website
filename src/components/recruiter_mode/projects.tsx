@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import PixelTransition from "../PixelTransition";
 import protoGif from "@/assets/vid1.gif";
+import idlemindgif from "@/assets/idlemind.gif";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import SplitText from "../SplitText";
@@ -34,6 +35,7 @@ export function Projects() {
         "CSS",
         "Python",
       ],
+      gif: idlemindgif,
       link: "https://www.idlemind.tech/",
     },
     {
